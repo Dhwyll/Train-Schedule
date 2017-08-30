@@ -60,7 +60,7 @@ $("#addTrain").on("click", function(event) {							// When the user adds a train
 		tName: trainName,
 		tDest: trainDest,
 		tFreq: trainFreq,
-		tStart: moment(trainStart).format("HH:mm"),						// convert the trainStart time to HH:mm format
+		tStart: moment(trainStart).format("HH:mm"),						// convert the trainStart time to HH:mm format...for future development
 		tNext: trainNext,
 		tAway: trainAway
 	});
