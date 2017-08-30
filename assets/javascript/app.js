@@ -43,7 +43,7 @@ $("#addTrain").on("click", function(event) {							// When the user adds a train
 	timeBetween = moment.duration(rightNow.diff(trainStart));				// How much time between right now and when the train starts
 	minutesDiff = parseInt(timeBetween.asMinutes());						// Convert the timeBetween to minutes.
 	if (minutesDiff === 0) {											// If the train is leaving right now...
-		trainNext = "Right Now";												// Then set tNext to "Right Now"...
+		trainNext = "Right Now";												// Then set trainNext to "Right Now"...
 		trainAway = 0;															// Which is 0 minutes away.
 	}
 		else if (minutesDiff < 0) {										// Otherwise, if the trains starts in the future...
@@ -52,8 +52,14 @@ $("#addTrain").on("click", function(event) {							// When the user adds a train
 		}
 			else {															// Otherwise, the train starts in the past
 				nextMinutesDiff = trainFreq - (minutesDiff % trainFreq);	// Get the remainder of minutes given the frequency of the train
-				trainNext = moment(rightNow).add(nextMinutesDiff, "minutes").format("HH:mm");		// Set tNext to now + nextMinutesDiff
-				trainAway = nextMinutesDiff;									// And set tAway to nextMinutesDiff
+				if (nextMinutesDiff === trainFreq) {						// If the train is leaving right now...
+					trainNext = "Right Now";									// Then set trainNext to "Right Now"...
+					trainAway = 0;												// Which is 0 minutes away.
+				}
+					else {
+						trainNext = moment(rightNow).add(nextMinutesDiff, "minutes").format("HH:mm");		// Set tNext to now + nextMinutesDiff
+						trainAway = nextMinutesDiff;														// And set tAway to nextMinutesDiff
+					}
 			}
 
 	database.ref("/trainData").push({									// Push the values to the database
